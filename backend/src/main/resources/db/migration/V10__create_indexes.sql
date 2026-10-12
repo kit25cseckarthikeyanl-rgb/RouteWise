@@ -1,0 +1,10 @@
+CREATE INDEX idx_ambulance_status ON ambulances(status);
+CREATE INDEX idx_emergency_status ON emergency_requests(status);
+CREATE INDEX idx_emergency_priority ON emergency_requests(priority);
+CREATE INDEX idx_emergency_requester ON emergency_requests(requester_id);
+CREATE INDEX idx_assignment_emergency ON emergency_assignments(emergency_id);
+CREATE INDEX idx_assignment_ambulance ON emergency_assignments(ambulance_id);
+CREATE INDEX idx_route_emergency ON routes(emergency_id);
+CREATE INDEX idx_routepoint_route ON route_points(route_id);
+CREATE INDEX idx_notification_user ON notifications(user_id);
+CREATE INDEX idx_audit_user ON audit_logs(user_id);

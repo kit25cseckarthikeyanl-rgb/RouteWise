@@ -1,0 +1,11 @@
+CREATE TABLE hospitals (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL,
+    emergency_capability BOOLEAN NOT NULL DEFAULT TRUE,
+    icu_available BOOLEAN NOT NULL DEFAULT TRUE,
+    beds_available INT NOT NULL DEFAULT 0,
+    status ENUM('AVAILABLE','BUSY','FULL','OFFLINE') NOT NULL DEFAULT 'AVAILABLE'
+) ENGINE=InnoDB;

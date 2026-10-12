@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:routewise_test;DB_CLOSE_DELAY=-1;MODE=MySQL
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: false
+
+routewise:
+  jwt:
+    secret: test-only-secret-key-not-for-production-use-1234567890
+    expiration-ms: 3600000
+  cors:
+    allowed-origins: http://localhost:5173
+  demo:
+    password: Demo@1234

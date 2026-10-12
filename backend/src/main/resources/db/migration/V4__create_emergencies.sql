@@ -1,0 +1,16 @@
+CREATE TABLE emergency_requests (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    request_number VARCHAR(30) NOT NULL UNIQUE,
+    requester_id BIGINT NOT NULL,
+    emergency_type ENUM('MEDICAL','ACCIDENT','FIRE','POLICE','OTHER') NOT NULL,
+    priority ENUM('LOW','MEDIUM','HIGH','CRITICAL') NOT NULL,
+    description VARCHAR(1000),
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL,
+    status ENUM('CREATED','SEARCHING_RESOURCE','ASSIGNED','ACCEPTED','EN_ROUTE_TO_PATIENT',
+                'PATIENT_PICKED_UP','EN_ROUTE_TO_HOSPITAL','ARRIVED_AT_HOSPITAL','COMPLETED','CANCELLED')
+                NOT NULL DEFAULT 'CREATED',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    CONSTRAINT fk_emergency_requester FOREIGN KEY (requester_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;

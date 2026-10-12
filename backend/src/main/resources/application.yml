@@ -1,0 +1,41 @@
+server:
+  port: ${BACKEND_PORT:8080}
+
+spring:
+  application:
+    name: routewise-backend
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:routewise}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USERNAME:routewise}
+    password: ${DB_PASSWORD:routewise}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+routewise:
+  jwt:
+    secret: ${JWT_SECRET:change-this-dev-only-secret-key-must-be-long-enough-for-hs256}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  demo:
+    password: ${DEMO_PASSWORD:Demo@1234}
+
+logging:
+  level:
+    com.routewise: INFO
+    org.hibernate.SQL: WARN

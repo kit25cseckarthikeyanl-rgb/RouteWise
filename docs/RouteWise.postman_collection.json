@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "RouteWise API",
+    "description": "Academic prototype - Intelligent Emergency Route and Resource Optimization System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api" },
+    { "key": "token", "value": "" },
+    { "key": "emergencyId", "value": "1" },
+    { "key": "ambulanceId", "value": "1" },
+    { "key": "hospitalId", "value": "1" },
+    { "key": "driverId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Citizen\",\n  \"email\": \"test.citizen@routewise.demo\",\n  \"password\": \"Password123\",\n  \"role\": \"CITIZEN\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"citizen@routewise.demo\",\n  \"password\": \"Demo@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        { "name": "Get all users (admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/users" } },
+        { "name": "Get user by id", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/users/1" } }
+      ]
+    },
+    {
+      "name": "Emergencies",
+      "item": [
+        {
+          "name": "Create emergency",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/emergencies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emergencyType\": \"ACCIDENT\",\n  \"priority\": \"CRITICAL\",\n  \"description\": \"Simulated demo accident\",\n  \"latitude\": 9.9252,\n  \"longitude\": 78.1198\n}"
+            }
+          }
+        },
+        { "name": "Get all (mine/all)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies" } },
+        { "name": "Get by id", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies/{{emergencyId}}" } },
+        {
+          "name": "Update status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/emergencies/{{emergencyId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"EN_ROUTE_TO_PATIENT\"\n}" }
+          }
+        },
+        { "name": "Dispatch", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies/{{emergencyId}}/dispatch" } },
+        { "name": "Driver accept", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies/{{emergencyId}}/accept" } },
+        { "name": "Cancel", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies/{{emergencyId}}/cancel" } },
+        { "name": "Start GPS simulation", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies/{{emergencyId}}/simulate/{{ambulanceId}}" } },
+        { "name": "Stop GPS simulation", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/emergencies/simulate/{{ambulanceId}}/stop" } }
+      ]
+    },
+    {
+      "name": "Ambulances",
+      "item": [
+        { "name": "Get all", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/ambulances" } },
+        { "name": "Get by id", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/ambulances/{{ambulanceId}}" } },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/ambulances",
+            "body": { "mode": "raw", "raw": "{\n  \"vehicleNumber\": \"AMB-999\",\n  \"latitude\": 9.9252,\n  \"longitude\": 78.1198\n}" }
+          }
+        },
+        {
+          "name": "Update status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/ambulances/{{ambulanceId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"AVAILABLE\"\n}" }
+          }
+        },
+        {
+          "name": "Update location",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/ambulances/{{ambulanceId}}/location",
+            "body": { "mode": "raw", "raw": "{\n  \"latitude\": 9.93,\n  \"longitude\": 78.12\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Drivers",
+      "item": [
+        { "name": "Get all", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/drivers" } },
+        { "name": "Get my driver profile", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/drivers/me" } },
+        { "name": "Get assignments", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/drivers/{{driverId}}/assignments" } }
+      ]
+    },
+    {
+      "name": "Hospitals",
+      "item": [
+        { "name": "Get all", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/hospitals" } },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/hospitals",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test Hospital\",\n  \"address\": \"1 Demo St\",\n  \"latitude\": 9.93,\n  \"longitude\": 78.12,\n  \"bedsAvailable\": 10,\n  \"icuAvailable\": true,\n  \"emergencyCapability\": true\n}" }
+          }
+        },
+        {
+          "name": "Update status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/hospitals/{{hospitalId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"BUSY\"\n}" }
+          }
+        },
+        {
+          "name": "Update capacity",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/hospitals/{{hospitalId}}/capacity",
+            "body": { "mode": "raw", "raw": "{\n  \"bedsAvailable\": 5,\n  \"icuAvailable\": false\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Routes",
+      "item": [
+        {
+          "name": "Calculate (default A*)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/routes/calculate",
+            "body": { "mode": "raw", "raw": "{\n  \"sourceLatitude\": 9.9252,\n  \"sourceLongitude\": 78.1198,\n  \"destinationLatitude\": 9.9452,\n  \"destinationLongitude\": 78.1398\n}" }
+          }
+        },
+        {
+          "name": "Dijkstra",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/routes/dijkstra",
+            "body": { "mode": "raw", "raw": "{\n  \"sourceLatitude\": 9.9252,\n  \"sourceLongitude\": 78.1198,\n  \"destinationLatitude\": 9.9452,\n  \"destinationLongitude\": 78.1398,\n  \"trafficFactor\": 1.3\n}" }
+          }
+        },
+        {
+          "name": "A*",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/routes/astar",
+            "body": { "mode": "raw", "raw": "{\n  \"sourceLatitude\": 9.9252,\n  \"sourceLongitude\": 78.1198,\n  \"destinationLatitude\": 9.9452,\n  \"destinationLongitude\": 78.1398,\n  \"trafficFactor\": 1.3\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dispatch",
+      "item": [
+        { "name": "Rank ambulances", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/dispatch/{{emergencyId}}/rank" } },
+        { "name": "Assign", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/dispatch/{{emergencyId}}/assign" } }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        { "name": "Summary", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/dashboard/summary" } },
+        { "name": "Analytics", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/dashboard/analytics" } },
+        { "name": "Active emergencies", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/dashboard/active-emergencies" } },
+        { "name": "Ambulances", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/dashboard/ambulances" } }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        { "name": "Get mine", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/notifications" } },
+        { "name": "Mark read", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/notifications/1/read" } }
+      ]
+    },
+    {
+      "name": "Audit Logs",
+      "item": [
+        { "name": "Get all (admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/audit-logs?page=0&size=50" } }
+      ]
+    }
+  ]
+}

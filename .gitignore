@@ -1,0 +1,27 @@
+# Environment
+.env
+
+# Backend
+backend/target/
+backend/*.log
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated build files
+*.tsbuildinfo
+node_modules/
+dist/
+target/
+

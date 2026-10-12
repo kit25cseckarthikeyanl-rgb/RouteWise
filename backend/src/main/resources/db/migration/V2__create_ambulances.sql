@@ -1,0 +1,10 @@
+CREATE TABLE ambulances (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    vehicle_number VARCHAR(30) NOT NULL UNIQUE,
+    driver_id BIGINT NULL,
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL,
+    status ENUM('AVAILABLE','ASSIGNED','EN_ROUTE','AT_SCENE','TRANSPORTING','OFFLINE') NOT NULL DEFAULT 'AVAILABLE',
+    current_emergency_id BIGINT NULL,
+    last_updated DATETIME NOT NULL
+) ENGINE=InnoDB;
