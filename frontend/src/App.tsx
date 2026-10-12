@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
 
 // Public Landing & Role Selection

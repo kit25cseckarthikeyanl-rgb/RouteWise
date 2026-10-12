@@ -12,3 +12,5 @@ export function ProtectedRoute({ allow, redirectTo = '/login' }: { allow?: Role[
 
   return <Outlet />;
 }
+
+export default ProtectedRoute;
