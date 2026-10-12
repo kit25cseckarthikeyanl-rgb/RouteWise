@@ -21,6 +21,7 @@ Thumbs.db
 
 # Generated build files
 *.tsbuildinfo
+.vite/
 node_modules/
 dist/
 target/
